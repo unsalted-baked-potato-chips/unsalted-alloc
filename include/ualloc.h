@@ -14,7 +14,7 @@ void   heap_free(void**);
 
 int8_t lin_alloc_init(size_t, linear_allocator *);
 int8_t lin_alloc(size_t, linear_allocator *, void **);
-void lin_free(linear_allocator *);
+void lin_free_all(linear_allocator *);
 void lin_clear(linear_allocator *);
 
 

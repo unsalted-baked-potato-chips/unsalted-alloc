@@ -22,7 +22,7 @@ void lin_clear(linear_allocator * allocator){
     allocator->position = allocator->buffer;
 }
 
-void line_free(linear_allocator * allocator){
+void line_free_all(linear_allocator * allocator){
     free(allocator->buffer);
     *allocator = {NULL,NULL,0};
 }
