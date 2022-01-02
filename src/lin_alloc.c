@@ -18,7 +18,7 @@ int8_t lin_alloc(size_t size, linear_allocator * allocator, void ** buffer){
     buffer = allocator->position;
 }
 
-void lin_clear(linear_allocator * allocator){
+void lin_free_all(linear_allocator * allocator){
     allocator->position = allocator->buffer;
 }
 

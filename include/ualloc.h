@@ -22,7 +22,7 @@ void   heap_free(void**);
 int8_t lin_alloc_init(size_t, linear_allocator *);
 int8_t lin_alloc(size_t, linear_allocator *, void **);
 void   lin_destroy(linear_allocator *);
-void   lin_clear(linear_allocator *);
+void   lin_free_all(linear_allocator *);
 
 int8_t stack_alloc_init(size_t, stack_allocator *);
 int8_t stack_alloc(size_t, stack_allocator *, void **);
