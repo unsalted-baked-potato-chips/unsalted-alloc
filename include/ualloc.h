@@ -1,6 +1,9 @@
 #ifndef UNSALTED_UALLOC_H
 #define UNSALTED_UALLOC_H
 
+#include <stdint.h>
+#include <stddef.h>
+
 struct _linear_allocator {
     void * buffer;
     void * position;
@@ -13,8 +16,8 @@ struct _stack_allocator {
     size_t size;
 };
 
-typedef _linear_allocator linear_allocator;
-typedef _stack_allocator  stack_allocator; 
+typedef struct _linear_allocator linear_allocator;
+typedef struct _stack_allocator  stack_allocator; 
 
 int8_t heap_alloc(size_t, void**);
 void   heap_free(void**);

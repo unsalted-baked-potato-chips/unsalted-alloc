@@ -1,3 +1,7 @@
+#include <stdlib.h>
+#include <stdint.h>
+#include <stddef.h>
+
 #include "ualloc.h"
 
 int8_t heap_alloc(size_t size, void ** buff_ptr){
