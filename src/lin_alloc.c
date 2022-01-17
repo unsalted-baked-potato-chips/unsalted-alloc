@@ -15,10 +15,12 @@ int8_t lin_alloc_init(size_t size, linear_allocator * allocator){
 }
 
 int8_t lin_alloc(size_t size, linear_allocator * allocator, void ** buffer){
-    if ((uint8_t *)(allocator->position) + size > ((uint8_t *)allocator->buffer)+allocator->size){
+    uint8_t * pos = (uint8_t *)allocator->position;
+    uint8_t * buff = (uint8_t *)allocator->buffer;
+    if (pos + size > (buff+allocator->size)){
         return 1;
     }
-    allocator->position = (void *)(((uint8_t *)(allocator->position)) + size);
+    allocator->position = (void *)(pos + size);
     buffer = allocator->position;
     return 0;
 }
