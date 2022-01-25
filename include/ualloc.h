@@ -29,7 +29,7 @@ void   lin_free_all(linear_allocator *);
 
 int8_t stack_alloc_init(size_t, stack_allocator *);
 int8_t stack_alloc(size_t, stack_allocator *, void **);
-void   stack_free(stack_allocator *);
+int8_t   stack_free(stack_allocator *);
 void   stack_destroy(stack_allocator *);
 
 
