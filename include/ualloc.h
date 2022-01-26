@@ -4,6 +4,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#define UALLOC_SUCCESS 0
+#define UALLOC_MALLOC_FAILED 1
+#define UALLOC_ALLOCATOR_INSUFFICIENT_SPACE 2
+#define UALLOC_STACK_EMPTY 3
+
 struct _linear_allocator {
     void * buffer;
     void * position;

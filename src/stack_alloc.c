@@ -7,18 +7,15 @@ typedef uint8_t byte;
 int8_t stack_alloc_init(size_t size, stack_allocator *allocator){
 	allocator->size = size;
 	allocator->buffer = malloc (size);
-	if (allocator->buffer == NULL){
-		return 1;
-	}
 	allocator->position = allocator->buffer;
-	return 0;
+	return (allocator->buffer == NULL) & UALLOC_MALLOC_FAILED;
 }
 int8_t stack_alloc(size_t size, stack_allocator *allocator, void ** allocation){
 	byte * pos = allocator->position;
 	byte * buff = allocator->buffer;
 
 	if(pos+size > buff + allocator->size){
-		return 1;
+		return UALLOC_ALLOCATOR_INSUFFICIENT_SPACE;
 	}
 
 	pos = pos + size + sizeof(void *);
@@ -34,7 +31,7 @@ int8_t stack_alloc(size_t size, stack_allocator *allocator, void ** allocation){
 }
 int8_t stack_free(stack_allocator *allocator){
 	if (allocator->buffer == allocator->position){
-		return 1;
+		return UALLOC_STACK_EMPTY;
 	}
 
 	byte * pos = allocator->position;
