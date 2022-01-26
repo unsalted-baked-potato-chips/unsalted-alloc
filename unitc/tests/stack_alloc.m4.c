@@ -10,6 +10,10 @@ new_test(stack_alloc_initializes){
 	stack_allocator allocator;
    return stack_alloc_init(ALLOCATOR_SIZE, &allocator);
 }
+new_test(stack_alloc_init_returns_MALLOC_FAILED_with_invalid_size){
+	stack_allocator allocator;
+   return !(stack_alloc_init(~0, &allocator) == UALLOC_MALLOC_FAILED);
+}
 new_test(stack_alloc_sets_size){
 
 	stack_allocator allocator;
@@ -21,10 +25,8 @@ new_test(stack_alloc_sets_size){
 	return !(allocator.size == ALLOCATOR_SIZE);
 }
 new_test(stack_alloc_init_fails_on_invalid_size){
-
 	stack_allocator allocator;
-   int8_t init = stack_alloc_init(~0, &allocator);
-	return !(init);
+	return !(stack_alloc_init(~0, &allocator));
 }
 new_test(stack_alloc_offset_defaults_to_base_of_buffer){
 
@@ -177,7 +179,18 @@ new_test(stack_alloc_prevent_overflow){
 	int *a = NULL;
 	uint8_t alloc = stack_alloc(ALLOCATOR_SIZE+1, & allocator, (void **)&a);
 	return !(alloc);
-	
+}
+
+new_test(stack_alloc_returns_ALLOCATOR_INSUFFICIENT_SPACE_on_potential_overflow){
+	stack_allocator allocator;
+   int8_t init = stack_alloc_init(ALLOCATOR_SIZE, &allocator);
+	if(init){
+		puts("Failed to init stack allocator");
+		return 1;
+	}
+	int *a = NULL;
+	uint8_t alloc = stack_alloc(ALLOCATOR_SIZE+1, & allocator, (void **)&a);
+	return !(alloc==UALLOC_ALLOCATOR_INSUFFICIENT_SPACE);
 }
 
 new_test(stack_free_resets_position_to_buffer_head_after_one_allocation){
@@ -233,6 +246,16 @@ new_test(stack_free_fails_on_empty_stack){
 		return 1;
 	}
 	return !(stack_free(&allocator));
+}
+new_test(stack_free_returns_STACK_EMPTY_on_empty_stack){
+
+	stack_allocator allocator;
+   int8_t init = stack_alloc_init(ALLOCATOR_SIZE, &allocator);
+	if(init){
+		puts("Failed to init stack allocator");
+		return 1;
+	}
+	return !(stack_free(&allocator)==UALLOC_STACK_EMPTY);
 }
 
 new_test(stack_destroy_sets_allocator_member_pointers_to_null){

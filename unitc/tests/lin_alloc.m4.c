@@ -33,7 +33,10 @@ new_test(lin_alloc_init_test){
     lin_destroy(&lin); 
     return 0;
 }
-
+new_test(lin_alloc_init_returns_MALLOC_FAILED_on_invalid_allocation_size){
+    linear_allocator lin;
+    return !(lin_alloc_init(~0, &lin)==UALLOC_MALLOC_FAILED);
+}
 new_test(lin_destroy_deletes_data_in_allocator_struct){
     linear_allocator lin;
     const size_t alloc_len = 64;
@@ -82,6 +85,14 @@ new_test(lin_alloc_overflow_prevented){
 
 }
 
+new_test(lin_alloc_returns_UALLOC_ALLOCATOR_INSUFFICIENT_SPACE_on_potential_overflow){
+    linear_allocator lin;
+    const size_t alloc_len = LIN_ALLOC_LEN+1;
+    lin_alloc_init(LIN_ALLOC_LEN, &lin);
+    void * alloc_buffer;
+    return !(lin_alloc(alloc_len, &lin, &alloc_buffer) == UALLOC_ALLOCATOR_INSUFFICIENT_SPACE);
+
+}
 new_test(lin_alloc_free_all_test){
     linear_allocator lin;
     const size_t alloc_len = 64;

@@ -4,7 +4,7 @@
 
 #include "ualloc.h"
 
-new_test(heap_alloc_returns_1_on_failure){
+new_test(heap_alloc_returns_non_zero_on_failure){
     void * ptr;
     if(heap_alloc((size_t)~0, &ptr)){
         return 0;
@@ -12,6 +12,17 @@ new_test(heap_alloc_returns_1_on_failure){
     puts("heap_alloc returned 0 on an invalid call.");
     return 1;
 }
+
+new_test(heap_alloc_returns_UALLOC_MALLOC_FAILED_on_failure){
+    void * ptr;
+	 int e = heap_alloc((size_t)~0, &ptr);
+    if( e == UALLOC_MALLOC_FAILED){
+        return 0;
+    }
+	 printf("heap_alloc returned %d on failed malloc call. Expected %d\n", e, UALLOC_MALLOC_FAILED);
+    return 1;
+}
+
 
 new_test(heap_free_sets_buffer_to_NULL){
     int a =2;
