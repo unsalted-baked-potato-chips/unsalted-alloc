@@ -1,7 +1,6 @@
 #ifndef UNSALTED_UALLOC_H
 #define UNSALTED_UALLOC_H
 
-#include <stdint.h>
 #include <stddef.h>
 
 #define UALLOC_SUCCESS 0
@@ -24,17 +23,17 @@ struct _stack_allocator {
 typedef struct _linear_allocator linear_allocator;
 typedef struct _stack_allocator  stack_allocator; 
 
-int8_t heap_alloc(size_t, void**);
+int heap_alloc(size_t, void**);
 void   heap_free(void**);
 
-int8_t lin_alloc_init(size_t, linear_allocator *);
-int8_t lin_alloc(size_t, linear_allocator *, void **);
+int lin_alloc_init(size_t, linear_allocator *);
+int lin_alloc(size_t, linear_allocator *, void **);
 void   lin_destroy(linear_allocator *);
 void   lin_free_all(linear_allocator *);
 
-int8_t stack_alloc_init(size_t, stack_allocator *);
-int8_t stack_alloc(size_t, stack_allocator *, void **);
-int8_t   stack_free(stack_allocator *);
+int stack_alloc_init(size_t, stack_allocator *);
+int stack_alloc(size_t, stack_allocator *, void **);
+int   stack_free(stack_allocator *);
 void   stack_destroy(stack_allocator *);
 
 
